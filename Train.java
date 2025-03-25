@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 public class Train implements TrainRequirements {
     //Attributes
-    private String name;
-    private String[] stops;
     private Engine thisEngine;
     private ArrayList<Car> cars;
 
@@ -13,14 +11,14 @@ public class Train implements TrainRequirements {
     /**
      * Contructor for the train
      * @param name The name of the train
-     * @param stops List of stations where it will stop
      * @param engine The engine of the train
      */
-    public Train(String name, String[] stops, Engine engine){
-        this.name = name;
-        this.stops = stops;
-        this.thisEngine = engine;
-        this.cars = new ArrayList<Car>();
+    public Train(FuelType fuelType, double fuelCapacity, int nCars, int passengerCapacity){
+        this.thisEngine = new Engine(fuelType, 0.0, fuelCapacity);
+        this.cars = new ArrayList<Car>(nCars);
+        for (int i = 0; i < nCars; i++) {
+            this.cars.add(new Car(passengerCapacity));
+        }
     }
 
     /**
@@ -76,36 +74,14 @@ public class Train implements TrainRequirements {
         }
     }
 
-    /**
-     * It is supposed to make a string containing the list of all the stops, but currently does not work
-     * @return The string "These are the stops: "
-     */
-    private String getStops(){
-        String stopsString = "These are the stops: ";
-        for (int q = 0; q <this.stops.length ; q++) {
-            stopsString.concat(this.stops[q]);
-            stopsString.concat(", ");
-            System.out.println(stopsString);
-        }
-        return stopsString;
-    }
 
     public String toString(){
-        return ("This is train: " + this.name + ". It will stop at these stations: " + this.getStops() + 
-        ". It has " +this.cars.size() + " many cars, and a maximum capacity of " + this.getMaxCapacity() + " many passengers.");
+        return ( "This train has " +this.cars.size() + "  cars, and a maximum capacity of " + this.getMaxCapacity() + " passengers.");
     }
 
     public static void main(String[] args) {
-        String[] testStops = new String[] {"NHT", "BOS", "NYC", "PHI", "BAL", "WAS"};
-        Engine testEngine = new Engine(FuelType.INTERNAL_COMBUSTION, 100,100 );
-        ArrayList<Passenger> testPassengers = new ArrayList<Passenger>();
-        Passenger testPassenger5 = new Passenger("Eric");
-        testPassengers.add(testPassenger5);
-        Train myTrain = new Train("Vermonter", testStops, testEngine);
-        Car testCar1 = new Car("A70", testPassengers, 30);
-        myTrain.cars.add(testCar1);
+        Train myTrain = new Train (FuelType.INTERNAL_COMBUSTION, 100.0, 4, 100);
         System.out.println(myTrain.toString());
-        //myTrain.getStops();
     }
 
 }   

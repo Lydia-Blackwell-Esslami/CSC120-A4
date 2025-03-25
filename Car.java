@@ -4,16 +4,14 @@ public class Car implements  CarRequirements{
     //Attributes
     public ArrayList<Passenger> passengers;
     private int maximumCapacity;
-    private String name;
 
     /**
      * Constructor for the car
      * @param passengers The arraylist of passengers that are in the car
      * @param maximumCapacity The maximum capacity of the car
      */
-    public Car(String name, ArrayList<Passenger> passengers,int maximumCapacity){
-        this.name = name;
-        this.passengers = passengers;
+    public Car(int maximumCapacity){
+        this.passengers = new ArrayList<Passenger>(maximumCapacity);
         this.maximumCapacity = maximumCapacity;
     }
 
@@ -71,7 +69,6 @@ public class Car implements  CarRequirements{
      * Prints all of the passengers on the car
      */
     public void printManifest(){
-        System.out.println("The passengers on car "+ this.name+ " are: ");
         for (int i = 0; i < this.passengers.size(); i++) {
             Passenger passenger = this.passengers.get(i);
             String name = passenger.name;
@@ -80,20 +77,16 @@ public class Car implements  CarRequirements{
     }
 
     public String toString(){
-        return("This is car "+ this.name+ ". It has a capacity of " + this.maximumCapacity + " people.");
+        return("This car has a capacity of " + this.maximumCapacity + " people.");
     }
 
     public static void main(String[] args) {
-        Passenger testPassenger3 = new Passenger("Emily");
         Passenger testPassenger4 = new Passenger("Bob");
-        ArrayList<Passenger> passengers = new ArrayList<Passenger>();
-        passengers.add(testPassenger3);
-        Car myCar = new Car("B15", passengers, 30);
+        Car myCar = new Car (30);
         myCar.printManifest();
         myCar.toString();
         myCar.addPassenger(testPassenger4);
         System.out.println(myCar.toString());
-        //myCar.removePassenger(testPassenger3);
         myCar.printManifest();
         System.out.println(myCar.toString());
 
